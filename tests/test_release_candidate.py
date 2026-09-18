@@ -100,7 +100,7 @@ class ReleaseCandidateContractTests(unittest.TestCase):
         documented = re.findall(r"^- `([^`]+)`$", section, flags=re.MULTILINE)
         self.assertEqual(documented, [item["name"] for item in CORE_MCP_TOOLS])
 
-    def test_package_metadata_is_consistent_and_public_urls_are_pending(self):
+    def test_package_metadata_is_consistent_and_public_urls_are_final(self):
         content = (RELEASE_ROOT / "pyproject.toml").read_text(encoding="utf-8")
         self.assertRegex(content, r'(?m)^name = "projectreader-core"$')
         self.assertRegex(content, rf'(?m)^version = "{re.escape(__version__)}"$')
@@ -114,10 +114,17 @@ class ReleaseCandidateContractTests(unittest.TestCase):
             'repository-engineering layer for AI coding agents"',
             content,
         )
-        self.assertNotIn("[project.urls]", content)
-        pending = (RELEASE_ROOT / "PUBLIC_METADATA_REQUIRED.md").read_text(encoding="utf-8")
-        self.assertIn("public source repository URL", pending)
-        self.assertNotIn("USER_METADATA_REQUIRED", pending)
+        self.assertIn("[project.urls]", content)
+        url_section = content.split("[project.urls]", 1)[1].split("\n[", 1)[0]
+        urls = dict(re.findall(r'(?m)^(\w+) = "([^"]+)"$', url_section))
+        self.assertEqual(urls, {
+            "Homepage": "https://github.com/wanfen764/projectreader-core",
+            "Repository": "https://github.com/wanfen764/projectreader-core",
+            "Issues": "https://github.com/wanfen764/projectreader-core/issues",
+        })
+        self.assertFalse((RELEASE_ROOT / "PUBLIC_METADATA_REQUIRED.md").exists())
+        manifest = (RELEASE_ROOT / "MANIFEST.in").read_text(encoding="utf-8")
+        self.assertNotIn("PUBLIC_METADATA_REQUIRED.md", manifest)
 
     def test_build_backend_floor_supports_spdx_license_metadata(self):
         # Build-time support must match project.license/project.license-files.
@@ -153,7 +160,7 @@ class ReleaseCandidateContractTests(unittest.TestCase):
     def test_ci_matrix_and_commands_are_declared(self):
         workflow = (RELEASE_ROOT / ".github" / "workflows" / "tests.yml").read_text(encoding="utf-8")
         self.assertNotIn("\t", workflow)
-        for value in ("ubuntu-latest", "windows-latest", "macos-latest", '"3.10"', '"3.13"'):
+        for value in ("ubuntu-latest", "windows-latest", "macos-latest", '"3.10"', '"3.11"', '"3.12"', '"3.13"'):
             self.assertIn(value, workflow)
         for command in (
             "python -B -m unittest discover -s tests -v",
@@ -163,6 +170,10 @@ class ReleaseCandidateContractTests(unittest.TestCase):
             "projectreader inspect examples/demo_repository greeting",
         ):
             self.assertIn(command, workflow)
+        readme = (RELEASE_ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn("Ubuntu, Windows, and macOS with Python 3.10–3.13", readme)
+        self.assertIn("Results are revision-specific", readme)
+        self.assertNotIn("Windows is locally validated", readme)
 
     def test_public_tree_has_no_internal_history_terms(self):
         terms = (
