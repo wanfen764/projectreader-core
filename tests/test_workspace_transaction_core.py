@@ -82,7 +82,8 @@ class WorkspaceTransactionCoreTests(unittest.TestCase):
 
     def test_apply_failure_compensates_attempted_files_and_directories(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # Match the transaction's canonical paths even for aliased temp roots.
+            root = Path(directory).resolve()
             blocker = root / "z.txt"
             blocker.write_text("old-z", encoding="utf-8")
             original_write = Path.write_bytes
@@ -108,7 +109,8 @@ class WorkspaceTransactionCoreTests(unittest.TestCase):
 
     def test_restore_failure_reports_partial_state(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # Match the transaction's canonical paths even for aliased temp roots.
+            root = Path(directory).resolve()
             first = root / "a.txt"
             second = root / "b.txt"
             first.write_text("old-a", encoding="utf-8")
