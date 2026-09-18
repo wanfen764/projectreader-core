@@ -5,6 +5,7 @@
 - Author: Asagiri Nightrin
 - Version: `0.1.0a1`
 - License: Apache-2.0
+- Repository: [wanfen764/projectreader-core](https://github.com/wanfen764/projectreader-core)
 
 ProjectReader Core is a model-agnostic, controlled, and auditable
 repository-engineering layer for AI coding agents.
@@ -255,10 +256,16 @@ accuracy, task success, token usage, or latency.
 - The verifier command and repository permissions remain the operator's
   responsibility.
 - This package is not a security sandbox and includes no built-in model.
-- Windows is locally validated for this release candidate. Other platforms
-  require their own release validation or CI result.
+- Platform validation covers the automated test suite, not every repository,
+  filesystem, verifier command, or deployment environment.
 
 ## Development / Tests
+
+The [pre-release GitHub Actions run](https://github.com/wanfen764/projectreader-core/actions/runs/35375547220)
+passed all 12 combinations of Ubuntu, Windows, and macOS with Python 3.10–3.13
+at commit `b4eadcb3022d15570220634463b7e6648fd4b99c`. Results are revision-specific;
+check [Actions](https://github.com/wanfen764/projectreader-core/actions) for the
+commit you intend to use.
 
 Run the deterministic local suite:
 
