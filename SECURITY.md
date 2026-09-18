@@ -6,13 +6,14 @@ repository-mutation boundary, not a security sandbox.
 
 ## Reporting a vulnerability
 
-After the public GitHub repository is created, the project will enable GitHub
-Private Vulnerability Reporting. Please use that private channel for suspected
-security vulnerabilities.
+Use GitHub Private Vulnerability Reporting for suspected security vulnerabilities
+when the **Report a vulnerability** option is available on the repository's
+[security advisories page](https://github.com/wanfen764/projectreader-core/security/advisories).
 
-Until that channel is available, do not post vulnerability details that could
-expose users in a public issue. This project does not publish a private email
-address for security reports.
+If that option is unavailable, do not post vulnerability details that could
+expose users in a public issue. The repository owner must enable the private
+channel before accepting reports through it. This project does not publish a
+private email address for security reports.
 
 Never paste credentials, access tokens, cookies, private keys, authentication
 files, or other secrets into a public issue, discussion, log excerpt, or test
