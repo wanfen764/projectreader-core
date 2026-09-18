@@ -31,6 +31,6 @@ code and can have effects outside the repository transaction. ProjectReader
 does not provide process isolation, network isolation, command sandboxing,
 concurrent-edit locking, or a crash-durable recovery journal.
 
-Until public maintainer contact details are supplied, do not include secrets or
-private repository content in a public issue. A private vulnerability-reporting
-channel is a manual release metadata requirement.
+Never include secrets or private repository content in a public issue. Follow
+the [security reporting policy](../SECURITY.md) for private vulnerability
+reporting and what to do if the private channel is unavailable.
