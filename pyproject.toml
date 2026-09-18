@@ -34,6 +34,11 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+[project.urls]
+Homepage = "https://github.com/wanfen764/projectreader-core"
+Repository = "https://github.com/wanfen764/projectreader-core"
+Issues = "https://github.com/wanfen764/projectreader-core/issues"
+
 [project.optional-dependencies]
 dev = ["build>=1"]
 
