@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "projectreader-core"
+version = "0.1.0a1"
+authors = [{ name = "Asagiri Nightrin" }]
+description = "A model-agnostic, controlled, and auditable repository-engineering layer for AI coding agents"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = []
+keywords = [
+  "repository engineering",
+  "mcp",
+  "code inspection",
+  "transactional patching",
+  "audit",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+dev = ["build>=1"]
+
+[project.scripts]
+projectreader = "projectreader.cli:main"
+projectreader-mcp = "projectreader.mcp.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["projectreader", "projectreader.*"]
+exclude = ["tests", "tests.*", "examples", "examples.*", "docs", "docs.*"]
